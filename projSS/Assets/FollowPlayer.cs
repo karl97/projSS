@@ -7,18 +7,31 @@ public class FollowPlayer : MonoBehaviour
     public GameObject player;
     private float xpos;
     private float startpos;
+    private float maxX;
+    private float startX;
+    private float height;
+    private float width;
     // Start is called before the first frame update
     void Start()
     {
         xpos = 0;
         startpos = this.transform.position.x;
+        maxX= player.transform.position.x;
+        startX = maxX;
+        Camera cam = Camera.main;
+        height = 2f * cam.orthographicSize;
+        width = height * cam.aspect;
     }
 
     // Update is called once per frame
     void Update()
     {
         xpos = player.transform.position.x;
-        this.transform.position = new Vector3(startpos+xpos, this.transform.position.y, this.transform.position.z);
-       
+        if ((maxX < xpos))
+        {
+            maxX = xpos;
+            //if((startpos)>(startX-xpos))
+            this.transform.position = new Vector3(startpos + xpos-startX-2, this.transform.position.y, this.transform.position.z);
+        }
     }
 }
