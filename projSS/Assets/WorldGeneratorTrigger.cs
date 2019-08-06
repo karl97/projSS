@@ -23,7 +23,7 @@ public class WorldGeneratorTrigger : MonoBehaviour
         w2.transform.position = new Vector3(startpos.x + width, startpos.y, startpos.z);
         w3.transform.position = new Vector3(startpos.x + width*2f, startpos.y, startpos.z);
         this.transform.position= new Vector3(startpos.x + width*1.5f, startpos.y, startpos.z);
-       
+        w1 = w3;
 
     }
 

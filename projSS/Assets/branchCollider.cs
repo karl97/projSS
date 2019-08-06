@@ -25,7 +25,7 @@ public class branchCollider : MonoBehaviour
             Debug.Log("HITBRANCH");
             joint.position = this.transform.position;
             player.GetComponent<SpringJoint2D>().enabled = true;
-            Destroy(GetComponent<BoxCollider2D>());
+            GetComponent<BoxCollider2D>().enabled = false; 
         }
     }
 
