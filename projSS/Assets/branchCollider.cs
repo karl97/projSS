@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class branchCollider : MonoBehaviour
 {
-    public Rigidbody2D joint;
+    //public Rigidbody2D joint;
     public Rigidbody2D player;
     // Start is called before the first frame update
     void Start()
@@ -23,8 +23,13 @@ public class branchCollider : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("HITBRANCH");
-            joint.position = this.transform.position;
-            player.GetComponent<SpringJoint2D>().enabled = true;
+            collision.gameObject.GetComponent<Touchable>().jointed=true;
+            collision.gameObject.GetComponent<Touchable>().jointPos = this.transform.position;
+            collision.gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+            collision.gameObject.transform.position = this.transform.position;
+            //joint.position = this.transform.position;
+            //player.GetComponent<SpringJoint2D>().enabled = true;
             GetComponent<BoxCollider2D>().enabled = false; 
         }
     }
