@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class WorldGeneratorTrigger : MonoBehaviour
 {
+    public Text score;
     public GameObject w1;
     private float counter;
     private float width;
@@ -38,7 +41,12 @@ public class WorldGeneratorTrigger : MonoBehaviour
         GameObject a = Instantiate(w1) as GameObject;
         
         a.transform.position = new Vector3(startpos.x+(width*(counter)),startpos.y,startpos.z);
+        GameObject treeAndBranch = a.transform.GetChild(2).gameObject;
+        GameObject branch= treeAndBranch.transform.GetChild(0).gameObject;
         w1 = a;
+        branch.transform.position = new Vector3(branch.transform.position.x, startpos.y+Random.Range(-3f, 3f), startpos.z);
+        
+       
     }
 
     private void deleteworld()
@@ -65,6 +73,7 @@ public class WorldGeneratorTrigger : MonoBehaviour
             this.transform.position = new Vector3(this.transform.position.x+width, this.transform.position.y, this.transform.position.z);
             deleteworld();
             counter++;
+            score.text = (counter-3).ToString();
 
 
         }
