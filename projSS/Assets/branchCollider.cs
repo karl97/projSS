@@ -5,7 +5,7 @@ using UnityEngine;
 public class branchCollider : MonoBehaviour
 {
     //public Rigidbody2D joint;
-    public Rigidbody2D player;
+    //public Rigidbody2D player;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +30,9 @@ public class branchCollider : MonoBehaviour
             collision.gameObject.transform.position = this.transform.position;
             //joint.position = this.transform.position;
             //player.GetComponent<SpringJoint2D>().enabled = true;
-            GetComponent<BoxCollider2D>().enabled = false; 
+            GetComponent<BoxCollider2D>().enabled = false;
+            collision.gameObject.GetComponent<tailFollow>().tail.transform.position = this.transform.position;
+            collision.gameObject.GetComponent<tailFollow>().tail.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
 

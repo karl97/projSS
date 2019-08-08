@@ -68,7 +68,8 @@ public class Touchable : MonoBehaviour
         {
             rb.AddForce(-((mouse - jointPos).normalized) * (stringVel) * (jointRange));
         }
-            //StartCoroutine(Fly());
+        this.GetComponent<tailFollow>().tail.GetComponent<SpriteRenderer>().enabled = false;
+        //StartCoroutine(Fly());
     }
 
 
