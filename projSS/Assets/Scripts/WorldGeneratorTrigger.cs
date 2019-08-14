@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class WorldGeneratorTrigger : MonoBehaviour
 {
-    public Text score;
+    
     public GameObject w1;
-    private float counter;
+    public int counter;
     private float width;
     private Vector3 startpos;
     // Start is called before the first frame update
@@ -73,7 +73,7 @@ public class WorldGeneratorTrigger : MonoBehaviour
             this.transform.position = new Vector3(this.transform.position.x+width, this.transform.position.y, this.transform.position.z);
             deleteworld();
             counter++;
-            score.text = (counter-3).ToString();
+           
 
 
         }

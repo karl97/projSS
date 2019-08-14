@@ -5,13 +5,15 @@ using UnityEngine;
 public class Touchable : MonoBehaviour
 {
     public AudioSource jump;
+    public Sprite clicked;
+    private Sprite standard;
     private bool Pressed = false;
     public bool jointed = false;
     public Rigidbody2D player;
     public Vector2 jointPos;
     //public Rigidbody2D joint;
     //public float releaseTime=0.15f;
-    public float jointRange=2f;
+    public float jointRange;
     private Rigidbody2D rb;
     public float stringVel;
     private Vector2 mouse;
@@ -20,6 +22,9 @@ public class Touchable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        jointRange = 3f;
+        PlayerPrefs.SetInt("Score", 0);//for the score to always be set to 0 in the beginneing of the game
+        standard =this.GetComponent<SpriteRenderer>().sprite;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -52,25 +57,39 @@ public class Touchable : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Pressed = true;
-        player.isKinematic = true;
+        if (jointed)
+        {
+            this.GetComponent<Animator>().SetBool("Isclicked", true);
+            Pressed = true;
+            player.isKinematic = true;
+        }
 
     }
     private void OnMouseUp()
     {
-        Pressed = false;
-        player.isKinematic = false;
-        jointed = false;
-        if (((mouse - jointPos).magnitude) < jointRange)
+        if (jointed)
         {
-            rb.AddForce(-((mouse - jointPos).normalized) * (stringVel) * ((mouse - jointPos).magnitude));
+            
+            Pressed = false;
+            player.isKinematic = false;
+
+            if (((mouse - jointPos).magnitude) < jointRange)
+            {
+                rb.AddForce(-((mouse - jointPos).normalized) * (stringVel) * ((mouse - jointPos).magnitude));
+                
+            }
+            else
+            {
+                rb.AddForce(-((mouse - jointPos).normalized) * (stringVel) * (jointRange));
+                
+            }
+            jump.Play();
+            jointed = false;
+            this.GetComponent<Animator>().SetBool("Isclicked", false);
+            this.GetComponent<Animator>().SetBool("isJointed", false);
+            this.GetComponent<tailFollow>().tail.GetComponent<SpriteRenderer>().enabled = false;
+            this.GetComponent<tailFollow>().tail2.GetComponent<SpriteRenderer>().enabled = true;
         }
-        else
-        {
-            rb.AddForce(-((mouse - jointPos).normalized) * (stringVel) * (jointRange));
-        }
-        this.GetComponent<tailFollow>().tail.GetComponent<SpriteRenderer>().enabled = false;
-        jump.Play();
     }
 
 

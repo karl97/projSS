@@ -25,6 +25,7 @@ public class groundCollider : MonoBehaviour
             blood.transform.position = collision.transform.position;
             blood.GetComponent<ParticleSystem>().Play(true);
             die.Play();
+
             StartCoroutine(Die());
         }
 
@@ -33,7 +34,11 @@ public class groundCollider : MonoBehaviour
 
     IEnumerator Die()
     {
-        
+        if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("Highscore"))
+        {
+
+            PlayerPrefs.SetInt("Highscore", PlayerPrefs.GetInt("Score")-1);
+        }
         yield return new WaitForSeconds(1);
         Application.LoadLevel("Game");
     }
