@@ -5,8 +5,6 @@ using UnityEngine;
 public class Touchable : MonoBehaviour
 {
     public AudioSource jump;
-    public Sprite clicked;
-    private Sprite standard;
     private bool Pressed = false;
     public bool jointed = false;
     public Rigidbody2D player;
@@ -24,7 +22,7 @@ public class Touchable : MonoBehaviour
     {
         jointRange = 3f;
         PlayerPrefs.SetInt("Score", 0);//for the score to always be set to 0 in the beginneing of the game
-        standard =this.GetComponent<SpriteRenderer>().sprite;
+        
         rb = GetComponent<Rigidbody2D>();
     }
 
