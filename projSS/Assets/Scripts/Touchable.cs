@@ -29,31 +29,66 @@ public class Touchable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (Pressed && jointed)
         {
             
-            mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+           
             if (Vector3.Distance(mouse, jointPos) > jointRange)
             {
                 player.position = jointPos + (mouse - jointPos).normalized * jointRange;
             }
             else
                 player.position = mouse;
-            
-        }
-        /*Vector2 mouse =Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Vector3.Distance(mouse, joint.position) > jointRange)
-        {
-            player.position = joint.position+(mouse-joint.position).normalized * jointRange;
-        }
-        else
-            player.position = mouse;
-          */
-        
-    
-    }
 
-    private void OnMouseDown()
+            
+
+
+
+        }
+        if (jointed && Input.GetMouseButtonDown(0) && Vector3.Distance(mouse, player.position) < 1.5f && !Pressed)
+        {
+            this.GetComponent<Animator>().SetBool("Isclicked", true);
+            Pressed = true;
+            player.isKinematic = true;
+        }
+
+        if (jointed && Input.GetMouseButtonUp(0) && Pressed)
+        {
+            Pressed = false;
+            player.isKinematic = false;
+
+            if (((mouse - jointPos).magnitude) < jointRange)
+            {
+                rb.AddForce(-((mouse - jointPos).normalized) * (stringVel) * ((mouse - jointPos).magnitude));
+
+            }
+            else
+            {
+                rb.AddForce(-((mouse - jointPos).normalized) * (stringVel) * (jointRange));
+
+            }
+            jump.Play();
+            jointed = false;
+            this.GetComponent<Animator>().SetBool("Isclicked", false);
+            this.GetComponent<Animator>().SetBool("isJointed", false);
+            this.GetComponent<tailFollow>().tail.GetComponent<SpriteRenderer>().enabled = false;
+            this.GetComponent<tailFollow>().tail2.GetComponent<SpriteRenderer>().enabled = true;
+        }
+
+            /*Vector2 mouse =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (Vector3.Distance(mouse, joint.position) > jointRange)
+            {
+                player.position = joint.position+(mouse-joint.position).normalized * jointRange;
+            }
+            else
+                player.position = mouse;
+              */
+
+
+        }
+
+   /* private void OnMouseDown()
     {
         if (jointed)
         {
@@ -90,7 +125,7 @@ public class Touchable : MonoBehaviour
         }
     }
 
-
+    */
     /*
     IEnumerator Fly()
     {
