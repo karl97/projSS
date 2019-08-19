@@ -11,6 +11,10 @@ public class WorldGeneratorTrigger : MonoBehaviour
     public int counter;
     private float width;
     private Vector3 startpos;
+    public Sprite g1;
+    public Sprite g2;
+    public Sprite g3;
+    private int groundType;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +47,16 @@ public class WorldGeneratorTrigger : MonoBehaviour
         a.transform.position = new Vector3(startpos.x+(width*(counter)),startpos.y,startpos.z);
         GameObject treeAndBranch = a.transform.GetChild(2).gameObject;
         GameObject branch= treeAndBranch.transform.GetChild(0).gameObject;
+
+        GameObject ground = a.transform.GetChild(0).gameObject;
+        groundType = Random.Range(1,4);
+        if(groundType==1)
+        ground.GetComponent<SpriteRenderer>().sprite=g1;
+        else if(groundType==2)
+            ground.GetComponent<SpriteRenderer>().sprite = g2;
+        else if(groundType==3)
+            ground.GetComponent<SpriteRenderer>().sprite = g3;
+        ground.GetComponent<groundCollider>().DMG = groundType;
         w1 = a;
         branch.transform.position = new Vector3(branch.transform.position.x, startpos.y+Random.Range(-3f, 3f), startpos.z);
         

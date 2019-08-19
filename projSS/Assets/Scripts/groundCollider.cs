@@ -6,10 +6,11 @@ public class groundCollider : MonoBehaviour
 {
     public GameObject blood;
     public AudioSource die;
+    public int DMG;
     // Start is called before the first frame update
     void Start()
     {
-
+      
     }
 
     // Update is called once per frame
@@ -17,17 +18,33 @@ public class groundCollider : MonoBehaviour
     {
 
     }
+
+
+    private void goToNextBranch(GameObject player) {
+
+
+
+    }
+
+
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Rigidbody2D>().velocity = new Vector2(0, collision.GetComponent<Rigidbody2D>().velocity.y);
-            blood.transform.position = collision.transform.position;
-            blood.GetComponent<ParticleSystem>().Play(true);
-            die.Play();
+            collision.gameObject.GetComponent<HP>().health = collision.gameObject.GetComponent<HP>().health - DMG;
+            if (collision.gameObject.GetComponent<HP>().health < 1)
+            {
+                collision.GetComponent<Rigidbody2D>().velocity = new Vector2(0, collision.GetComponent<Rigidbody2D>().velocity.y);
+                blood.transform.position = collision.transform.position;
+                blood.GetComponent<ParticleSystem>().Play(true);
+                die.Play();
 
-            StartCoroutine(Die());
-        }
+                StartCoroutine(Die());
+            }
+            else { goToNextBranch(collision.gameObject); }
+            }
 
         
     }
